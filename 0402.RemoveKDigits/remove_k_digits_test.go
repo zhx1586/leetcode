@@ -48,6 +48,16 @@ func TestRemoveKDigits(t *testing.T) {
 				ret: "0",
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				num: "112",
+				k:   1,
+			},
+			want: want{
+				ret: "11",
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := removeKdigits(tt.args.num, tt.args.k)

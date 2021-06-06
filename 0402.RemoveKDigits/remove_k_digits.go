@@ -17,6 +17,9 @@ func removeKdigitsCore(num string, k int, start int, ret *[]byte, pos int) {
 		}
 		return
 	}
+	if pos == len(*ret) {
+		return
+	}
 
 	minValue, minValueIndex := findMinValueAndIndex(num, start, start+k+1)
 	(*ret)[pos] = minValue
