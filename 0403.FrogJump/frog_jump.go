@@ -1,7 +1,10 @@
 package frogjump
 
 func canCross(stones []int) bool {
-	return canCrossCore(stones, 1, stones[1]-stones[0])
+	if stones[1]-stones[0] != 1 {
+		return false
+	}
+	return canCrossCore(stones, 1, 1)
 }
 
 func canCrossCore(stones []int, pos int, k int) bool {

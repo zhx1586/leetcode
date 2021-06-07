@@ -35,6 +35,15 @@ func TestCanCross(t *testing.T) {
 				ret: false,
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				stones: []int{0, 2},
+			},
+			want: want{
+				ret: false,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := canCross(tt.args.stones)
