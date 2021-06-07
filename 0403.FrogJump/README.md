@@ -34,3 +34,14 @@ Explanation: There is no way to jump to the last stone as the gap between the 5t
 
 - `stones[0] == 0`
 
+## 解题思路
+
+- 个人思路：
+
+  - 递归+缓存（缓存`key`为当前位置和当前`k`拼接而成的字符串）。
+
+- 最优思路：
+
+  - 递归+缓存（缓存`key`为当前位置移位和当前`k`取并得到的整数）。
+
+  - 动态规划。
