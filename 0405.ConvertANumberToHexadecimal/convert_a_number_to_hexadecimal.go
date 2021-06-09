@@ -5,6 +5,9 @@ import (
 )
 
 func toHex(num int) string {
+	if num == 0 {
+		return "0"
+	}
 	hex := map[int]byte{
 		0x0: '0',
 		0x1: '1',

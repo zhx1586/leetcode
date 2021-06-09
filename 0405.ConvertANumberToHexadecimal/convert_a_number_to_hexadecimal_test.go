@@ -35,6 +35,15 @@ func TestToHex(t *testing.T) {
 				ret: "ffffffff",
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				num: 0,
+			},
+			want: want{
+				ret: "0",
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := toHex(tt.args.num)
