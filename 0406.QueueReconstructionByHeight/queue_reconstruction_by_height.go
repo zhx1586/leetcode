@@ -1,7 +1,6 @@
 package queuereconstructionbyheight
 
 import (
-	"fmt"
 	"sort"
 )
 
@@ -21,7 +20,6 @@ func (h People) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
 
 func reconstructQueue(people [][]int) [][]int {
 	sort.Sort(People(people))
-	fmt.Println(people)
 	ret := make([][]int, len(people))
 	for _, p := range people {
 		k := p[1]
