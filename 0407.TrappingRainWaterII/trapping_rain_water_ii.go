@@ -19,6 +19,7 @@ func trapRainWater(heightMap [][]int) int {
 				}
 			}
 		}
+		height++
 		for i := 0; i < m; i++ {
 			marks = search(i, 0, marks)
 			marks = search(i, n-1, marks)
@@ -30,22 +31,19 @@ func trapRainWater(heightMap [][]int) int {
 
 		//fmt.Printf("height: %d,  marks: %+v\n", height, marks)
 
-		height++
-		blocks := 0
+		inc := 0
 		for x := 0; x < m; x++ {
 			for y := 0; y < n; y++ {
 				if marks[x][y] == 0 {
-					ret++
-				}
-				if heightMap[x][y] >= height {
-					blocks++
+					inc++
 				}
 			}
 		}
-		//fmt.Println(ret)
-		if blocks < 4 {
+		ret = ret + inc
+		if inc == 0 && ret != 0 {
 			break
 		}
+		//fmt.Println(ret)
 	}
 
 	return ret
