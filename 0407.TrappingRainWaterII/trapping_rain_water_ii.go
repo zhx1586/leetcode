@@ -1,7 +1,9 @@
 package trappingrainwaterii
 
+import "fmt"
+
 func trapRainWater(heightMap [][]int) int {
-	//fmt.Println(heightMap)
+	fmt.Println(heightMap)
 	m, n := len(heightMap), len(heightMap[0])
 
 	ret := 0
@@ -19,7 +21,7 @@ func trapRainWater(heightMap [][]int) int {
 				}
 			}
 		}
-		height++
+		fmt.Printf("height: %d,  marks: %+v\n", height, marks)
 		for i := 0; i < m; i++ {
 			marks = search(i, 0, marks)
 			marks = search(i, n-1, marks)
@@ -29,7 +31,8 @@ func trapRainWater(heightMap [][]int) int {
 			marks = search(m-1, i, marks)
 		}
 
-		//fmt.Printf("height: %d,  marks: %+v\n", height, marks)
+		fmt.Printf("height: %d,  marks: %+v\n", height, marks)
+		height++
 
 		inc := 0
 		blocks := 0
@@ -43,14 +46,15 @@ func trapRainWater(heightMap [][]int) int {
 				}
 			}
 		}
+		fmt.Printf("inc: %d, blocks: %d\n", inc, blocks)
 		ret = ret + inc
 		if inc == 0 && ret != 0 {
-			break
+			//break
 		}
 		if blocks < 4 {
 			break
 		}
-		//fmt.Println(ret)
+		fmt.Println(ret)
 	}
 
 	return ret
