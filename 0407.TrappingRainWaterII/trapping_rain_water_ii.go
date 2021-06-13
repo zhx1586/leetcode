@@ -1,115 +1,77 @@
 package trappingrainwaterii
 
-import "fmt"
+import (
+	"container/heap"
+)
+
+type direction struct {
+	Dx int
+	Dy int
+}
+
+type block struct {
+	H int
+	X int
+	Y int
+}
+
+type blockHeap []block
+
+func (h blockHeap) Len() int            { return len(h) }
+func (h blockHeap) Less(i, j int) bool  { return h[i].H < h[j].H }
+func (h blockHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *blockHeap) Push(x interface{}) { *h = append(*h, x.(block)) }
+func (h *blockHeap) Pop() interface{} {
+	x := (*h)[len(*h)-1]
+	*h = (*h)[0 : len(*h)-1]
+	return x
+}
 
 func trapRainWater(heightMap [][]int) int {
-	fmt.Println(heightMap)
 	m, n := len(heightMap), len(heightMap[0])
 
-	ret := 0
-	height := 1
-	for {
-		marks := make([][]int, m)
-		for i := 0; i < m; i++ {
-			marks[i] = make([]int, n)
-		}
+	visited := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		visited[i] = make([]bool, n)
+	}
 
-		for x := 0; x < m; x++ {
-			for y := 0; y < n; y++ {
-				if heightMap[x][y] >= height {
-					marks[x][y] = 2
-				}
+	h := make(blockHeap, 0)
+	for x := 0; x < m; x++ {
+		for y := 0; y < n; y++ {
+			if x == 0 || x == m-1 || y == 0 || y == n-1 {
+				h = append(h, block{H: heightMap[x][y], X: x, Y: y})
+				visited[x][y] = true
 			}
 		}
-		fmt.Printf("height: %d,  marks: %+v\n", height, marks)
-		for i := 0; i < m; i++ {
-			marks = search(i, 0, marks)
-			marks = search(i, n-1, marks)
-		}
-		for i := 1; i < n; i++ {
-			marks = search(0, i, marks)
-			marks = search(m-1, i, marks)
-		}
+	}
+	heap.Init(&h)
 
-		fmt.Printf("height: %d,  marks: %+v\n", height, marks)
-		height++
+	directions := []direction{
+		{Dx: -1, Dy: 0},
+		{Dx: 1, Dy: 0},
+		{Dx: 0, Dy: -1},
+		{Dx: 0, Dy: 1},
+	}
 
-		inc := 0
-		blocks := 0
-		for x := 0; x < m; x++ {
-			for y := 0; y < n; y++ {
-				if marks[x][y] == 0 {
-					inc++
-				}
-				if heightMap[x][y] >= height {
-					blocks++
-				}
+	ret, height := 0, 0
+
+	for len(h) > 0 {
+		curr := heap.Pop(&h).(block)
+		if curr.H > height {
+			height = curr.H
+		}
+		for _, d := range directions {
+			x, y := curr.X+d.Dx, curr.Y+d.Dy
+			if x < 0 || x >= m || y < 0 || y >= n || visited[x][y] {
+				continue
 			}
+			if heightMap[x][y] < height {
+				ret = ret + (height - heightMap[x][y])
+			}
+			visited[x][y] = true
+			heap.Push(&h, block{H: heightMap[x][y], X: x, Y: y})
 		}
-		fmt.Printf("inc: %d, blocks: %d\n", inc, blocks)
-		ret = ret + inc
-		if inc == 0 && ret != 0 {
-			//break
-		}
-		if blocks < 4 {
-			break
-		}
-		fmt.Println(ret)
 	}
 
 	return ret
-}
-
-func search(x0 int, y0 int, marks [][]int) [][]int {
-	if marks[x0][y0] > 0 {
-		return marks
-	}
-
-	marks[x0][y0] = 1
-	next := [][]int{{x0, y0}}
-
-	for len(next) > 0 {
-		curr := next[0]
-		next = next[1:]
-
-		x, y := curr[0]-1, curr[1]
-		if canBeMarked(x, y, marks) {
-			next = append(next, []int{x, y})
-			marks[x][y] = 1
-			//fmt.Printf("(%d,%d)->(%d,%d)\n", curr[0], curr[1], x, y)
-		}
-		x, y = curr[0]+1, curr[1]
-		if canBeMarked(x, y, marks) {
-			next = append(next, []int{x, y})
-			marks[x][y] = 1
-			//fmt.Printf("(%d,%d)->(%d,%d)\n", curr[0], curr[1], x, y)
-		}
-		x, y = curr[0], curr[1]-1
-		if canBeMarked(x, y, marks) {
-			next = append(next, []int{x, y})
-			marks[x][y] = 1
-			//fmt.Printf("(%d,%d)->(%d,%d)\n", curr[0], curr[1], x, y)
-		}
-		x, y = curr[0], curr[1]+1
-		if canBeMarked(x, y, marks) {
-			next = append(next, []int{x, y})
-			marks[x][y] = 1
-			//fmt.Printf("(%d,%d)->(%d,%d)\n", curr[0], curr[1], x, y)
-		}
-	}
-
-	return marks
-}
-
-func canBeMarked(x int, y int, marks [][]int) bool {
-	if x < 0 || x >= len(marks) {
-		return false
-	}
-	if y < 0 || y >= len(marks[0]) {
-		return false
-	}
-	if marks[x][y] > 0 {
-		return false
-	}
-	return true
 }
