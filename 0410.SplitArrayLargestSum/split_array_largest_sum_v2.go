@@ -19,12 +19,10 @@ func splitArrayV2(nums []int, m int) int {
 		for x := 0; x < n; x++ {
 			for y := x + k - 1; y < n; y++ {
 				ans := dp[x][y][0]
-				for i := 1; i < k; i++ {
-					for j := x + i - 1; j < y && y-j >= k-i; j++ {
-						sum := max(dp[x][j][i-1], dp[j+1][y][k-i-1])
-						if ans > sum {
-							ans = sum
-						}
+				for j := x; j < y && y-j >= k-1; j++ {
+					sum := max(dp[x][j][0], dp[j+1][y][k-2])
+					if ans > sum {
+						ans = sum
 					}
 				}
 				dp[x][y][k-1] = ans
