@@ -24,6 +24,9 @@ func splitArrayV2(nums []int, m int) int {
 					if ans > sum {
 						ans = sum
 					}
+					if dp[x][z][0] > ans {
+						break
+					}
 				}
 				dp[x][y][k-1] = ans
 			}
