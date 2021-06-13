@@ -13,30 +13,31 @@ func splitArray(nums []int, m int) int {
 	}
 
 	ret := cache[0][len(nums)-1]
-	splitArrayCore(0, m, &[]int{0}, &cache, &ret)
+	splitArrayCore(0, m, 0, &cache, &ret)
 
 	return ret
 }
 
-func splitArrayCore(curr int, m int, path *[]int, cache *[][]int, ret *int) {
+func splitArrayCore(curr int, m int, largest int, cache *[][]int, ret *int) {
 	if m == 1 {
-		*path = append(*path, len(*cache))
-		largest := 0
-		for i := 1; i < len(*path); i++ {
-			sum := (*cache)[(*path)[i-1]][(*path)[i]-1]
-			if largest < sum {
-				largest = sum
-			}
+		sum := (*cache)[curr][len(*cache)-1]
+		if largest < sum {
+			largest = sum
 		}
 		if *ret > largest {
 			*ret = largest
 		}
-		*path = (*path)[0 : len(*path)-1]
 		return
 	}
 	for next := curr + 1; next < len(*cache); next++ {
-		*path = append(*path, next)
-		splitArrayCore(next, m-1, path, cache, ret)
-		*path = (*path)[0 : len(*path)-1]
+		sum := (*cache)[curr][next-1]
+		if sum > *ret {
+			return
+		}
+		if largest < sum {
+			splitArrayCore(next, m-1, sum, cache, ret)
+		} else {
+			splitArrayCore(next, m-1, largest, cache, ret)
+		}
 	}
 }
