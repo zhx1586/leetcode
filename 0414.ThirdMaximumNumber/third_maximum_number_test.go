@@ -54,6 +54,15 @@ func TestThirdMax(t *testing.T) {
 				ret: 3,
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				nums: "[1,2,2,5,3,5]",
+			},
+			want: want{
+				ret: 2,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := thirdMax(IntSlice(tt.args.nums))

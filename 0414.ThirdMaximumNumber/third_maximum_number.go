@@ -1,6 +1,8 @@
 package thirdmaximumnumber
 
-import "container/heap"
+import (
+	"container/heap"
+)
 
 type intHeap []int
 
@@ -33,7 +35,7 @@ func thirdMax(nums []int) int {
 		if len(maximum) < 3 {
 			heap.Push(&maximum, n)
 		} else {
-			if n > maximum[len(maximum)-1] {
+			if n > maximum[0] {
 				heap.Pop(&maximum)
 				heap.Push(&maximum, n)
 			}
