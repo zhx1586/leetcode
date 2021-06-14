@@ -70,6 +70,16 @@ func TestSplitArray(t *testing.T) {
 				ret: 2667,
 			},
 		},
+		{
+			name: "Failed 3",
+			args: args{
+				nums: "[2,3,1,2,4,3]",
+				m:    5,
+			},
+			want: want{
+				ret: 4,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := splitArrayV3(IntSlice(tt.args.nums), tt.args.m)
