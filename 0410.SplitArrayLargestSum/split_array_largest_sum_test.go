@@ -72,7 +72,7 @@ func TestSplitArray(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		got := splitArrayV2(IntSlice(tt.args.nums), tt.args.m)
+		got := splitArrayV3(IntSlice(tt.args.nums), tt.args.m)
 		if !reflect.DeepEqual(got, tt.want.ret) {
 			t.Errorf("TestSplitArray %s failed: (got: %+v, want: %+v)",
 				tt.name, got, tt.want.ret)
