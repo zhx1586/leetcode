@@ -1,6 +1,8 @@
 package partitionequalsubsetsum
 
-import "sort"
+import (
+	"sort"
+)
 
 func canPartition(nums []int) bool {
 	sum := 0
@@ -17,15 +19,25 @@ func canPartition(nums []int) bool {
 }
 
 func canPartitionCore(nums sort.IntSlice, pos int, target int) bool {
-	if pos == len(nums) {
-		return false
-	}
-	if nums[pos] > target {
-		return false
-	} else if nums[pos] < target {
-		return canPartitionCore(nums, pos+1, target) ||
-			canPartitionCore(nums, pos+1, target-nums[pos])
-	} else {
+	if target == 0 {
 		return true
+	} else if target < 0 {
+		return false
 	}
+	if pos >= len(nums) {
+		return false
+	}
+	count := 1
+	for i := pos + 1; i < len(nums); i++ {
+		if nums[i] > nums[pos] {
+			break
+		}
+		count++
+	}
+	for i := 1; i <= count; i++ {
+		if canPartitionCore(nums, pos+count, target-i*nums[pos]) {
+			return true
+		}
+	}
+	return false
 }
