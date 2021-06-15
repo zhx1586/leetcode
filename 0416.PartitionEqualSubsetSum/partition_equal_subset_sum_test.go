@@ -45,6 +45,15 @@ func TestCanPartition(t *testing.T) {
 				ret: false,
 			},
 		},
+		{
+			name: "Failed 2",
+			args: args{
+				nums: "[1,2,3,4,5,6,7]",
+			},
+			want: want{
+				ret: true,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := canPartition(IntSlice(tt.args.nums))

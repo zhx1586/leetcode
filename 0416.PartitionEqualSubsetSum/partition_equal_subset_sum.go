@@ -34,7 +34,7 @@ func canPartitionCore(nums sort.IntSlice, pos int, target int) bool {
 		}
 		count++
 	}
-	for i := 1; i <= count; i++ {
+	for i := 0; i <= count; i++ {
 		if canPartitionCore(nums, pos+count, target-i*nums[pos]) {
 			return true
 		}
