@@ -1,9 +1,5 @@
 package partitionequalsubsetsum
 
-import (
-	"sort"
-)
-
 func canPartition(nums []int) bool {
 	sum := 0
 	for _, n := range nums {
@@ -13,31 +9,26 @@ func canPartition(nums []int) bool {
 		return false
 	}
 
-	sort.Sort(sort.IntSlice(nums))
+	dp := [][]bool{}
+	for i := 0; i < len(nums)+1; i++ {
+		dp = append(dp, make([]bool, sum+1))
+	}
+	dp[0][0] = true
 
-	return canPartitionCore(nums, 0, sum/2)
-}
-
-func canPartitionCore(nums sort.IntSlice, pos int, target int) bool {
-	if target == 0 {
-		return true
-	} else if target < 0 {
-		return false
-	}
-	if pos >= len(nums) {
-		return false
-	}
-	count := 1
-	for i := pos + 1; i < len(nums); i++ {
-		if nums[i] > nums[pos] {
-			break
-		}
-		count++
-	}
-	for i := 0; i <= count; i++ {
-		if canPartitionCore(nums, pos+count, target-i*nums[pos]) {
-			return true
+	for i := 0; i < len(nums); i++ {
+		for j := 1; j <= sum; j++ {
+			if j >= nums[i] {
+				dp[i+1][j] = dp[i][j-nums[i]] || dp[i][j]
+			} else {
+				dp[i+1][j] = dp[i][j]
+			}
 		}
 	}
-	return false
+
+	//fmt.Println(nums)
+	//for _, r := range dp {
+	//fmt.Println(r)
+	//}
+
+	return dp[len(nums)][sum/2]
 }
