@@ -43,3 +43,7 @@ Explanation: The array cannot be partitioned into equal sum subsets.
     - 如果 `nums` 中的前 `i-1` 个数字能组合成 `j`，那么前 `i` 个数字也能组合成 `j` （相当于 `nums[j]` 无贡献）；
 
     - 如果 `nums` 中的前 `i-1` 个数字能组合成 `j-nums[i]`，那么前 `i` 个数字能组合成 `j` （相当于 `nums[i]` 有贡献）。
+
+- 分析：
+
+  - 最优思路巧妙的点在于，`dp` 数组的第二个维度为全部数字之和 `sum`，即全部数字能组合成的最大范围。
