@@ -1,6 +1,7 @@
 package util
 
 import (
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -42,4 +43,37 @@ func toInts(s string) []int {
 		ints[i] = n
 	}
 	return ints
+}
+
+type SortMatrix [][]int
+
+func (m SortMatrix) Len() int { return len(m) }
+func (m SortMatrix) Less(i, j int) bool {
+	if m[i][0] < m[j][0] {
+		return true
+	} else if m[i][0] > m[j][0] {
+		return false
+	} else {
+		return m[i][1] < m[j][1]
+	}
+}
+func (m SortMatrix) Swap(i, j int) { m[i], m[j] = m[j], m[i] }
+
+func MatrixEqual(a, b SortMatrix) bool {
+	sort.Sort(a)
+	sort.Sort(b)
+	if len(a) != len(b) {
+		return false
+	}
+	for i := 0; i < len(a); i++ {
+		if len(a[i]) != len(b[i]) {
+			return false
+		}
+		for j := 0; j < len(a[0]); j++ {
+			if a[i][j] != b[i][j] {
+				return false
+			}
+		}
+	}
+	return true
 }
