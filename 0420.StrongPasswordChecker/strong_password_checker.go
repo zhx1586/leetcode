@@ -1,11 +1,13 @@
 package strongpasswordchecker
 
 func strongPasswordChecker(password string) int {
+	//fmt.Println(password)
 	ins, del := 0, 0
 
 	upper, lower, digit := false, false, false
 	for i := 0; i < len(password); i++ {
-		if i > 2 && password[i] == password[i-1] && password[i] == password[i-2] {
+		//fmt.Printf("i:%d, del:%d\n", i, del)
+		if i >= 2 && password[i] == password[i-1] && password[i] == password[i-2] {
 			del++
 		}
 		if password[i] >= 'A' && password[i] <= 'Z' {
@@ -25,13 +27,16 @@ func strongPasswordChecker(password string) int {
 	if !digit {
 		ins++
 	}
-	if len(password) > 20 {
-		del = max(del, len(password)-20)
-	} else if len(password) < 6 {
-		ins = max(ins, 6-len(password))
-	}
+	length := len(password) + ins - del
 
-	return abs(ins - del)
+	if length > 20 {
+		del = del + (length - 20)
+	} else if length < 6 {
+		ins = ins + (6 - length)
+	}
+	//fmt.Printf("length:%d, ins:%d, del:%d\n", length, ins, del)
+
+	return max(ins, del)
 }
 
 func max(a, b int) int {
@@ -39,11 +44,4 @@ func max(a, b int) int {
 		return a
 	}
 	return b
-}
-
-func abs(a int) int {
-	if a >= 0 {
-		return a
-	}
-	return -a
 }
