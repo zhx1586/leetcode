@@ -91,6 +91,15 @@ func TestFindMaximumXOR(t *testing.T) {
 				ret: 32767,
 			},
 		},
+		{
+			name: "Failed 4",
+			args: args{
+				nums: "[2147483647,2147483646,2147483645]",
+			},
+			want: want{
+				ret: 3,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := findMaximumXOR(IntSlice(tt.args.nums))
