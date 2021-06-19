@@ -1,19 +1,26 @@
 package maximumxoroftwonumbersinanarray
 
-import "math"
-
 func findMaximumXOR(nums []int) int {
-	dp := 0
-	for i := 1; i < len(nums); i++ {
-		for j := 0; j < i; j++ {
-			if nums[i]^nums[j] > dp {
-				dp = nums[i] ^ nums[j]
-				if dp == int(math.MaxInt32) {
-					return dp
+	set := map[int]bool{}
+	all := 0
+	for _, n := range nums {
+		set[n] = true
+		all = all | n
+	}
+
+	//fmt.Println(len(nums))
+
+	for t := all; t >= 0; t-- {
+		if t|all == all {
+			//fmt.Printf("t:%b\n", t)
+			for _, n := range nums {
+				if _, ok := set[n^t]; ok {
+					//fmt.Printf("(%b,%b)\n", n, n^t)
+					return t
 				}
 			}
 		}
 	}
 
-	return dp
+	return 0
 }
