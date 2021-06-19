@@ -53,6 +53,15 @@ func TestStrongPasswordChecker(t *testing.T) {
 				ret: 2,
 			},
 		},
+		{
+			name: "Failed 2",
+			args: args{
+				password: "aaaB1",
+			},
+			want: want{
+				ret: 1,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := strongPasswordChecker(tt.args.password)
