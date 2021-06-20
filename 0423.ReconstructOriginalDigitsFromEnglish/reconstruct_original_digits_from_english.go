@@ -1,7 +1,5 @@
 package reconstructoriginaldigitsfromenglish
 
-import "strconv"
-
 func originalDigits(s string) string {
 	code := []string{
 		"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
@@ -23,7 +21,7 @@ func originalDigits(s string) string {
 		'x': 0, // six
 		'z': 0, // zero
 	}
-	digits := make([]int, 10)
+	digits, length := make([]int, 10), 0
 
 	for i := 0; i < len(s); i++ {
 		counts[s[i]]++
@@ -46,17 +44,19 @@ func originalDigits(s string) string {
 	}
 	for _, s := range seq {
 		digits[s.num] = counts[s.letter]
+		length = length + digits[s.num]
 		for i := 0; i < len(code[s.num]); i++ {
 			counts[code[s.num][i]] = counts[code[s.num][i]] - digits[s.num]
 		}
 	}
 
-	ret := ""
+	ret, curr := make([]byte, length), 0
 	for i := 0; i < 10; i++ {
-		for j := 0; j < digits[i]; j++ {
-			ret = ret + strconv.Itoa(i)
+		for j := curr; j < curr+digits[i]; j++ {
+			ret[j] = '0' + byte(i)
 		}
+		curr = curr + digits[i]
 	}
 
-	return ret
+	return string(ret)
 }
