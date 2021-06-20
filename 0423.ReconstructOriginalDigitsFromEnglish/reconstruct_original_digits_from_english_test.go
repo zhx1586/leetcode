@@ -35,6 +35,15 @@ func TestOriginalDigits(t *testing.T) {
 				ret: "45",
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				s: "esnve",
+			},
+			want: want{
+				ret: "7",
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := originalDigits(tt.args.s)

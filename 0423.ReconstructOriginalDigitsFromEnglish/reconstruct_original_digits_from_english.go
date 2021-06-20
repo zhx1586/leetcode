@@ -11,7 +11,7 @@ func originalDigits(s string) string {
 		'g': 0, // eight
 		'f': 0, // four, five
 		'i': 0, // five, six, eight, nine
-		'h': 0, // eight
+		'h': 0, // three, eight
 		'o': 0, // zero, one, two, four
 		'n': 0, // one, seven, nine
 		's': 0, // six, seven
@@ -19,7 +19,7 @@ func originalDigits(s string) string {
 		'u': 0, // four
 		't': 0, // two, three, eight
 		'w': 0, // two
-		'v': 0, // five
+		'v': 0, // five, seven
 		'x': 0, // six
 		'z': 0, // zero
 	}
@@ -36,10 +36,10 @@ func originalDigits(s string) string {
 		{'z', 0},
 		{'w', 2},
 		{'u', 4},
-		{'v', 5},
 		{'x', 6},
 		{'g', 8},
 		{'s', 7},
+		{'v', 5},
 		{'r', 3},
 		{'o', 1},
 		{'i', 9},
