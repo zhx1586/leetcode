@@ -18,8 +18,6 @@ func minMutation(start string, end string, bank []string) int {
 		}
 	}
 	ret := 1
-	//fmt.Printf("start: %s, end:%s, bank: %v\n", start, end, bank)
-	//fmt.Printf("edges: %v, queue: %v\n", edges, queue)
 	for len(queue) > 0 {
 		curr := queue[0]
 		queue = queue[1:]
