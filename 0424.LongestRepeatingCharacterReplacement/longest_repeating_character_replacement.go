@@ -4,8 +4,10 @@ func characterReplacement(s string, k int) int {
 	ret, n := 0, len(s)
 	lo, hi := 0, 0
 	counts := map[byte]int{s[0]: 1}
+	//fmt.Println(s)
 
 	for hi < n {
+		//fmt.Printf("lo:%d, hi:%d, ret:%d, counts:%v\n", lo, hi, ret, counts)
 		validate := isValiade(counts, hi-lo+1, k)
 		if validate {
 			ret = max(ret, hi-lo+1)
@@ -14,8 +16,8 @@ func characterReplacement(s string, k int) int {
 				counts[s[hi]]++
 			}
 		} else if lo < hi {
-			lo++
 			counts[s[lo]]--
+			lo++
 		} else {
 			hi++
 			if hi < n {

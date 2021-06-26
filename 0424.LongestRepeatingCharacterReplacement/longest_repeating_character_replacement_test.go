@@ -38,6 +38,16 @@ func TestCharacterReplacement(t *testing.T) {
 				ret: 4,
 			},
 		},
+		{
+			name: "Failed 1",
+			args: args{
+				s: "ABAA",
+				k: 0,
+			},
+			want: want{
+				ret: 2,
+			},
+		},
 	}
 	for _, tt := range tests {
 		got := characterReplacement(tt.args.s, tt.args.k)
