@@ -20,14 +20,14 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	sort.Sort(Intervals(intervals))
 
 	count, last := 0, 0
-	for i := 1; i < len(intervals); i++ {
-		if intervals[i][0] < intervals[last][1] {
+	for curr := 1; curr < len(intervals); curr++ {
+		if intervals[curr][0] < intervals[last][1] {
 			count++
-			if intervals[i][1] < intervals[last][1] {
-				last = i
+			if intervals[curr][1] < intervals[last][1] {
+				last = curr
 			}
 		} else {
-			last = i
+			last = curr
 		}
 	}
 
