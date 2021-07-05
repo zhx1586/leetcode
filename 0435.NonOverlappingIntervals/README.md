@@ -38,3 +38,18 @@ Explanation: You don't need to remove any of the intervals since they're already
 
 - `-2 * 10^4 <= start_i < end_i <= 2 * 10^4`
 
+## 解题思路
+
+- 最优思路：（排序+贪心）
+
+  - 对 `intervals` 进行排序，`start_i` 较小的在前，`start_i` 相等时 `end_i` 较小的在前。
+
+  - 遍历排序后的 `intervals`：
+
+    - 如果 `intervals[curr][0] < intervals[last][1]`，则当前区间与前一个区间有重叠，必须删除一个，计数值 `count` 加一；
+
+      - 如果 `intervals[curr][1] < intervals[last][1]`，则删除 `last` 对应的区间，否则删除 `curr` 对应的区间。
+
+    - 如果没有重叠，则不需要删除，将 `last` 更新为 `curr`，继续遍历。
+
+  - 核心思想就是在重叠时尽可能保留右端点较小的区间。
